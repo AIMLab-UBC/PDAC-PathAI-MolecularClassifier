@@ -1,0 +1,61 @@
+{
+    "model" :{
+        "num_subtypes" : 2,
+        "base_model" : "vgg19_bn",
+        "pretrained" : true,
+        "last_layers": "short",
+        "concat_pool": true
+    },
+    "normalize" : {
+        "use_normalize" : false,
+        "mean" : [ 0.7784, 0.7081, 0.7951 ],
+        "std" : [ 0.1685, 0.2008, 0.1439 ]
+    },
+    "augmentation" : {
+      "use_augmentation": true,
+      "flip": true,
+      "color_jitter": false,
+      "rotation": false,
+      "size_jitter": {
+          "use_size_jitter": false,
+          "ratio": 0.2,
+          "probability": 0.7,
+          "color": "white"
+      },
+      "cut_out": {
+          "use_cut_out": false,
+          "num_cut": 2,
+          "size_cut": 100,
+          "color_cut": "white"
+      }
+    },
+    "use_weighted_loss" : {
+        "use_weighted_loss" : false,
+        "weight": [0.63, 0.37]
+    },
+    "use_weighted_sampler" : false,
+    "use_balanced_sampler" : false,
+    "mix_up" : {
+        "use_mix_up" : false,
+        "alpha": 0.4
+    },
+    "freeze": -1,
+    "continue_train": false,
+    "optimizer" : {
+        "type" : "Adam",
+        "parameters" : {
+            "lr" : 0.00003,
+            "amsgrad" : true,
+            "weight_decay" : 0.0001
+        }
+    },
+    "scheduler" : {
+        "type" : "OneCycleLR",
+        "parameters" : {
+            "max_lr" : 0.01,
+            "steps_per_epoch" : 1202,
+            "epochs" : 10,
+            "three_phase": true
+        }
+    }
+}

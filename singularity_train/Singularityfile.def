@@ -1,0 +1,44 @@
+Bootstrap: library
+From: debian:latest
+%post
+    apt-get update && apt-get -y upgrade
+    apt-get -y install \
+    build-essential openslide-tools \
+    wget \
+    bzip2 \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    git
+    apt-get install -y procps g++
+
+    #Installing Anaconda 3
+    wget -c https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
+    /bin/bash Anaconda3-2022.05-Linux-x86_64.sh -bfp /usr/local
+    rm Anaconda3-2022.05-Linux-x86_64.sh
+    
+
+    #Conda configuration of channels from .condarc file
+    conda config --file /.condarc --add channels defaults
+    conda config --file /.condarc --add channels conda-forge
+    conda update conda 
+    conda install -c conda-forge tensorboard
+    conda install -c conda-forge protobuf 
+    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+
+    #Install submodules
+    pip install --upgrade pip
+    #pip install efficientnet-pytorch
+    pip install git+https:///github.com/Amiiirali/EfficientNet-PyTorch.git
+    pip install pyyaml h5py openslide-python tabulate matplotlib pandas Shapely numpy pytest
+    pip install pillow tqdm h5py numpy pyyaml pynvml scikit-image scikit-learn
+    # pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+    pip install grad-cam
+    pip install ttach
+    pip install opencv-python
+    apt-get clean && rm -rf /var/lib/apt/lists/* /var/tmp/* 
+
+%runscript
+    python app.py $*
