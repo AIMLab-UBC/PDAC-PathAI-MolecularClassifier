@@ -1,0 +1,5 @@
+psutil
+tqdm
+pyyaml
+numpy
+openslide-python
